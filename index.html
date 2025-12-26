@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Temperatura</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <video id="bg-video" autoplay muted loop playsinline>
+        <source src="assets/background.mp4" type="video/mp4">
+    </video>
+
+    <audio id="theme-audio" loop>
+        <source src="assets/theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="audio-controls">
+        <button id="play-audio" class="audio-btn" title="Tocar música">🎵</button>
+        <button id="pause-audio" class="audio-btn" title="Pausar música">⏸️</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🌡️ CALCULADORA DE TEMPERATURA</h1>
+            <p class="description">
+                Converta temperaturas entre Celsius, Fahrenheit e Kelvin de forma rápida e precisa. 
+                Digite o valor, selecione a escala de origem e destino, e visualize os resultados 
+                através de gráficos interativos com pontos de congelamento e ebulição.
+            </p>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label for="temp-value">Temperatura:</label>
+                <input type="number" id="temp-value" placeholder="Digite o valor" step="0.01">
+            </div>
+
+            <div class="input-group">
+                <label for="from-scale">De:</label>
+                <select id="from-scale">
+                    <option value="celsius">Celsius (°C)</option>
+                    <option value="fahrenheit">Fahrenheit (°F)</option>
+                    <option value="kelvin">Kelvin (K)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="to-scale">Para:</label>
+                <select id="to-scale">
+                    <option value="celsius">Celsius (°C)</option>
+                    <option value="fahrenheit">Fahrenheit (°F)</option>
+                    <option value="kelvin">Kelvin (K)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="button-section">
+            <button id="calculate-btn" class="btn btn-calculate">CALCULAR</button>
+            <button id="return-btn" class="btn btn-return">RETORNAR</button>
+        </div>
+<br/>
+<br/>
+
+        <div id="result-section" class="result-section">
+            <h2>RESULTADO</h2>
+            <div id="conversion-result" class="conversion-result"></div>
+            <div id="calculation-steps" class="calculation-steps"></div>
+            
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="gaugeChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="boilingChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
