@@ -373,12 +373,7 @@ Desenvolvedor Full Stack apaixonado por criar soluções elegantes e eficientes.
 
 ---
 
-## 📚 Documentação Adicional
 
-- 📘 **[Guia.md](Guia.md)** - Guia completo de execução e troubleshooting
-- 📝 **[post-linkedin.txt](post-linkedin.txt)** - Modelo de post para divulgação
-
----
 
 ## 🌟 Mostre seu apoio
 
