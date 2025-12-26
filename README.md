@@ -60,39 +60,146 @@ conversor-temperatura/
 ├── 🎨 styles.css          # Estilos visuais cyberpunk
 ├── 📊 dashboard.js        # Lógica frontend + gráficos Chart.js
 ├── ⚙️  calculator.go       # Backend Go com API REST
+├── 🚀 start.sh            # Script de inicialização (Linux/Mac)
+├── 🚀 start.bat           # Script de inicialização (Windows)
+├── 🚀 start.py            # Script de inicialização (Python/Universal)
 ├── 📁 assets/
 │   ├── 🎥 background.mp4  # Vídeo de fundo (3840x2160)
 │   └── 🎵 theme.mp3       # Música ambiente
-└── 📖 README.md
+├── 📖 README.md           # Documentação principal
+└── 📘 Guia.md             # Guia completo de execução e troubleshooting
 ```
 
 ---
 
 ## 🚀 Como Usar
 
-### Opção 1: Frontend Standalone (Recomendado para testes rápidos)
+### ⚡ Método Rápido (Scripts de Inicialização)
 
+Criamos scripts automatizados para facilitar a execução do projeto:
+
+**Linux/Mac:**
 ```bash
 # Clone o repositório
 git clone https://github.com/luizfxdev/conversor-temperatura.git
 cd conversor-temperatura
 
-# Abra o index.html diretamente no navegador
-# A lógica de conversão está implementada em JavaScript
+# Execute o script
+chmod +x start.sh
+./start.sh
 ```
 
-### Opção 2: Com Backend Go (Full Stack)
+**Windows:**
+```bash
+# Clone o repositório
+git clone https://github.com/luizfxdev/conversor-temperatura.git
+cd conversor-temperatura
+
+# Execute o script
+start.bat
+```
+
+**Qualquer SO (com Python):**
+```bash
+python3 start.py
+# ou
+python start.py
+```
+
+Os scripts automaticamente:
+- ✅ Verificam se Go está instalado
+- ✅ Iniciam o servidor backend (porta 8080)
+- ✅ Abrem o frontend no navegador
+- ✅ Encerram tudo com Ctrl+C
+
+### 🔧 Método Manual
 
 ```bash
-# Instale Go (se ainda não tiver)
+# 1. Clone o repositório
+git clone https://github.com/luizfxdev/conversor-temperatura.git
+cd conversor-temperatura
+
+# 2. Instale Go (se ainda não tiver)
 # https://golang.org/dl/
 
-# Execute o servidor
+# 3. Inicie o servidor backend
 go run calculator.go
 
-# O servidor estará rodando em http://localhost:8080
-# Abra index.html no navegador
+# 4. Abra index.html no navegador
+# O frontend consumirá a API em http://localhost:8080
 ```
+
+> 📘 **Guia Completo:** Para troubleshooting e instruções detalhadas, consulte o [Guia.md](Guia.md)
+
+---
+
+## 🏗️ Arquitetura do Sistema
+
+O projeto utiliza uma arquitetura **cliente-servidor** com comunicação via API REST:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        FRONTEND                             │
+│  ┌─────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │  index.html │  │  styles.css  │  │ dashboard.js │      │
+│  │   (UI/UX)   │  │   (Design)   │  │  (Lógica)    │      │
+│  └─────────────┘  └──────────────┘  └──────┬───────┘      │
+│                                              │               │
+│                                   HTTP POST  │               │
+│                                   /convert   │               │
+└──────────────────────────────────────────────┼──────────────┘
+                                               │
+                                         JSON Request
+                                    {value, fromScale, toScale}
+                                               │
+                                               ▼
+┌──────────────────────────────────────────────┼──────────────┐
+│                        BACKEND              │               │
+│  ┌──────────────────────────────────────────▼──────┐       │
+│  │           calculator.go (Go/Golang)             │       │
+│  │                                                  │       │
+│  │  • Recebe requisição HTTP                       │       │
+│  │  • Executa conversões matemáticas               │       │
+│  │  • Calcula todas as escalas                     │       │
+│  │  • Gera passos detalhados                       │       │
+│  │  • Retorna JSON com resultados                  │       │
+│  └──────────────────────────────────────────┬──────┘       │
+│                                              │               │
+└──────────────────────────────────────────────┼──────────────┘
+                                               │
+                                         JSON Response
+                              {convertedValue, allValues,
+                               calculationSteps, ...}
+                                               │
+                                               ▼
+┌──────────────────────────────────────────────┼──────────────┐
+│                    VISUALIZAÇÃO             │               │
+│  ┌──────────────────────────────────────────▼──────┐       │
+│  │              Chart.js (Gráficos)                │       │
+│  │                                                  │       │
+│  │  • Gráfico de Barras (Comparação)               │       │
+│  │  • Gráfico de Linha (Distribuição)              │       │
+│  │  • Gráfico de Referência (Pontos)               │       │
+│  └──────────────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Fluxo de Dados
+
+1. **Usuário** insere temperatura e seleciona escalas
+2. **dashboard.js** envia POST para `http://localhost:8080/convert`
+3. **calculator.go** processa os cálculos em Go
+4. **API REST** retorna JSON com todos os resultados
+5. **dashboard.js** atualiza a interface e renderiza gráficos
+6. **Chart.js** exibe visualizações interativas
+
+### Por que Go no Backend?
+
+- ⚡ **Performance**: Compilado, execução rápida
+- 🔒 **Tipagem forte**: Segurança nos cálculos
+- 🎯 **Precisão**: Controle total sobre operações matemáticas
+- 🌐 **Concorrência**: Pronto para múltiplas requisições
+- 📦 **Deploy simples**: Binário único sem dependências
 
 ---
 
@@ -200,6 +307,42 @@ Coloque na pasta `assets/`:
 
 ---
 
+## 🚀 Scripts de Inicialização
+
+O projeto inclui scripts automatizados para facilitar a execução:
+
+### start.sh (Linux/Mac)
+- Verifica instalação do Go
+- Inicia servidor backend
+- Abre navegador automaticamente
+- Encerra tudo com Ctrl+C
+
+### start.bat (Windows)
+- Interface amigável em português
+- Abre backend em janela separada
+- Detecta navegador padrão
+
+### start.py (Universal)
+- Funciona em qualquer SO com Python
+- Tratamento robusto de erros
+- Melhor para ambientes complexos
+
+**Uso:**
+```bash
+# Linux/Mac
+./start.sh
+
+# Windows
+start.bat
+
+# Python (qualquer SO)
+python3 start.py
+```
+
+> 📘 Para mais detalhes, consulte o [Guia.md](Guia.md)
+
+---
+
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Sinta-se à vontade para:
@@ -218,13 +361,23 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
-### 👨‍💻 Autor
+## 👨‍💻 Autor
 
 **Luiz Felipe de Oliveira**
 
-- GitHub: [@luizfxdev](https://github.com/luizfxdev)
-- Linkedin: [in/luizfxdev](https://www.linkedin.com/in/luizfxdev)
-- Portfólio: [luizfxdev.com.br](https://luizfxdev.com.br)
+Desenvolvedor Full Stack apaixonado por criar soluções elegantes e eficientes.
+
+- 🌐 **Portfólio:** [luizfxdev.com.br](https://luizfxdev.com.br)
+- 💼 **LinkedIn:** [in/luizfxdev](https://www.linkedin.com/in/luizfxdev)
+- 🐙 **GitHub:** [@luizfxdev](https://github.com/luizfxdev)
+
+---
+
+## 📚 Documentação Adicional
+
+- 📘 **[Guia.md](Guia.md)** - Guia completo de execução e troubleshooting
+- 📝 **[post-linkedin.txt](post-linkedin.txt)** - Modelo de post para divulgação
+
 ---
 
 ## 🌟 Mostre seu apoio
